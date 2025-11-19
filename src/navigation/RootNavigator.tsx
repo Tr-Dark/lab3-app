@@ -14,7 +14,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 import type { RootStackParamList, AppTabsParamList } from "./types";
 
-// Екрани
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -55,7 +54,7 @@ function AppTabsNavigator() {
             if (route.name === "Settings") {
               return focused ? "settings" : "settings-outline";
             }
-            return "ellipse"; // fallback
+            return "ellipse"; 
           };
           return <Ionicons name={getName()} size={size} color={color} />;
         },
@@ -95,13 +94,15 @@ export default function RootNavigator() {
         <Stack.Screen
           name="AppTabs"
           component={AppTabsNavigator}
-          options={{ headerShown: false }} // ховаємо header для Tabs
+          options={{ headerShown: false }} 
         />
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ title: "Profil użytkownika" }}
-        />
+        //   options={{ title: "Profil użytkownika" }}
+          options={({ route }) => ({
+            title: `Profil: ${(route.params as any).userId}`,
+        })} />
       </Stack.Navigator>
     </NavigationContainer>
   );

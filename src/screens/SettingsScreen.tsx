@@ -20,6 +20,7 @@ import type { AppTabsParamList, RootStackParamList } from "../navigation/types";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { AUTH_USER } from "../config/auth";
 
 type Route = RouteProp<AppTabsParamList, "Settings">;
 type RootNav = NativeStackNavigationProp<RootStackParamList>;
@@ -79,9 +80,9 @@ export default function SettingsScreen() {
           <Row
             icon="person-circle"
             label="Profil użytkownika"
-            value="user_123"
+            value={AUTH_USER.email} 
             onPress={() =>
-              navigation.navigate("Profile", { userId: "user_123" })
+              navigation.navigate("Profile", { userId: AUTH_USER.id })
             }
           />
           <Divider />
@@ -98,7 +99,10 @@ export default function SettingsScreen() {
             rightIconColor={COLORS.danger}
             rightIcon="chevron-forward"
             onPress={() => {
-              // тут можна буде зробити reset стеку при бажанні
+              navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+              });
             }}
           />
         </GroupCard>

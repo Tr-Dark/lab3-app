@@ -5,8 +5,7 @@ export type RootStackParamList = {
   Profile: { userId: string };
 };
 
-// Закладки (нижня навігація)
 export type AppTabsParamList = {
   Home: undefined;
-  Settings: { section?: string } | undefined; // параметр НЕобов'язковий
+  Settings: { section?: string } | undefined; 
 };

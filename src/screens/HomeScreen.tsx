@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import type { RootStackParamList } from "../navigation/types";
+import { AUTH_USER } from "../config/auth"; 
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
@@ -24,7 +25,7 @@ export default function HomeScreen() {
       title: "Profil",
       icon: "person",
       color: "#4C9AFF",
-      onPress: () => navigation.navigate("Profile", { userId: "user_123" }),
+      onPress: () => navigation.navigate("Profile", { userId: AUTH_USER.id }),
     },
     {
       key: "settings",

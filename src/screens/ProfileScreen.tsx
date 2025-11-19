@@ -13,8 +13,13 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import type { RootStackParamList } from "../navigation/types";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AUTH_USER } from "../config/auth"; 
 
 type Route = RouteProp<RootStackParamList, "Profile">;
+type Nav = NativeStackNavigationProp<RootStackParamList>;
+
 
 const COLORS = {
   bg: "#0f1420",
@@ -29,6 +34,7 @@ const COLORS = {
 
 export default function ProfileScreen() {
   const route = useRoute<Route>();
+  const navigation = useNavigation<Nav>(); 
   const { userId } = route.params;
 
   const displayName = useMemo(() => {
@@ -56,7 +62,7 @@ export default function ProfileScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header / карточка профілю */}
+        {/* Header */}
         <View style={styles.headerCard}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>{initials}</Text>
@@ -97,9 +103,9 @@ export default function ProfileScreen() {
         {/* Informacje */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Informacje</Text>
-          <Item icon="mail-outline" label="E-mail" value="user@example.com" />
+          <Item icon="mail-outline" label="E-mail" value={AUTH_USER.email} />
           <Divider />
-          <Item icon="call-outline" label="Telefon" value="+48 600 000 000" />
+          <Item icon="call-outline" label="Telefon" value={AUTH_USER.telephone} />
           <Divider />
           <Item icon="globe-outline" label="Strona" value="example.com" />
           <Divider />
@@ -157,6 +163,24 @@ export default function ProfileScreen() {
             />
           </Pressable>
         </View>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={{
+            marginTop: 12,
+            alignSelf: "center",
+            paddingHorizontal: 16,
+            paddingVertical: 10,
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.18)",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <Ionicons name="arrow-back-outline" size={18} color={COLORS.text} />
+          <Text style={{ color: COLORS.text, fontWeight: "600" }}>Powrót</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );

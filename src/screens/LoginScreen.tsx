@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import type { RootStackParamList } from "../navigation/types";
+import { AUTH_USER } from "../config/auth";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -21,13 +22,24 @@ export default function LoginScreen({ navigation }: Props) {
   const [pwd, setPwd] = useState("");
   const [showPwd, setShowPwd] = useState(false);
   const [remember, setRemember] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const canLogin = email.trim().length > 3 && pwd.length >= 3;
 
   const onLogin = () => {
     if (!canLogin) return;
-    // replace: щоб не можна було повернутися "назад" на Login
-    navigation.replace("AppTabs");
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (
+      normalizedEmail === AUTH_USER.email.toLowerCase() &&
+      pwd === AUTH_USER.password
+    ) {
+      setError(null);
+      navigation.replace("AppTabs");
+    } else {
+      setError("Nieprawidłowy e-mail lub hasło");
+    }
   };
 
   return (
@@ -78,6 +90,12 @@ export default function LoginScreen({ navigation }: Props) {
               />
             </Pressable>
           </View>
+          
+          {error && (
+            <Text style={{ color: "#ff6b6b", marginTop: 8, fontSize: 13 }}>
+              {error}
+            </Text>
+          )}
 
           <View style={styles.row}>
             <View style={styles.rowLeft}>
