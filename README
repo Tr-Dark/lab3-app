@@ -1,0 +1,19 @@
+npx create-expo-app my-app -t expo-template-blank-typescript
+cd my-app
+
+
+# Core + залежності
+npm i @react-navigation/native
+npx expo install react-native-screens react-native-safe-area-context
+
+# Stack (нaтивний)
+npm i @react-navigation/native-stack
+
+# Tabs (нижні вкладки)
+npm i @react-navigation/bottom-tabs
+
+# Іконки
+npx expo install @expo/vector-icons
+
+
+npx expo start --tunnel
